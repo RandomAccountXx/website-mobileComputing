@@ -1,4 +1,4 @@
-const x = document.getElementById("location");
+const location = document.getElementById("location");
 
 function getLocation() {
   if (navigator.geolocation) {

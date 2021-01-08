@@ -94,7 +94,7 @@ function getRandomCityForQuiz() {
   randomLongitude = addLeadingZeroesAndSignLongitude(generateNewLongitudeCoordinate())
   randomLatitude = addLeadingZeroesAndSignLatitude(generateNewLatitudeCoordinate())
 
-  let cityRequest = `https://wft-geo-db.p.rapidapi.com/v1/geo/cities?radius=${searchRadius}&minPopulation=${minPopulation}&location=${randomLatitude}${randomLongitude}`
+  let cityRequest = `https://wft-geo-db.p.rapidapi.com/v1/geo/cities?radius=${searchRadius}&minPopulation=${minPopulation}&location=${encodeURIComponent(randomLatitude)}${encodeURIComponent(randomLongitude)}`
   console.log(cityRequest)
 
   //fetch city with random coordinates and over 2000000 inhabitants.(lat before long)

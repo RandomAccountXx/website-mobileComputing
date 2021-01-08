@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="be5c5dbb-b13c-42cc-8ec7-3fd75f7cc419" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/main.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -24,7 +25,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" environment="&lt;No Environment&gt;" path="">
@@ -40,7 +41,7 @@
       <option name="presentableId" value="Default" />
       <updated>1610031212746</updated>
       <workItem from="1610031215379" duration="5291000" />
-      <workItem from="1610069499015" duration="2043000" />
+      <workItem from="1610069499015" duration="3027000" />
     </task>
     <servers />
   </component>
@@ -72,10 +73,10 @@
       <screen x="1920" y="0" width="2560" height="1400" />
     </state>
     <state width="2517" height="352" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.2560.1400@1920.0.2560.1400" timestamp="1610044595343" />
-    <state x="2702" y="346" key="SettingsEditor" timestamp="1610070410258">
+    <state x="2702" y="346" key="SettingsEditor" timestamp="1610072688215">
       <screen x="1920" y="0" width="2560" height="1400" />
     </state>
-    <state x="2702" y="346" key="SettingsEditor/0.0.1920.1040/1920.0.2560.1400@1920.0.2560.1400" timestamp="1610070410258" />
+    <state x="2702" y="346" key="SettingsEditor/0.0.1920.1040/1920.0.2560.1400@1920.0.2560.1400" timestamp="1610072688215" />
     <state x="2863" y="315" width="672" height="678" key="search.everywhere.popup" timestamp="1610043960635">
       <screen x="1920" y="0" width="2560" height="1400" />
     </state>

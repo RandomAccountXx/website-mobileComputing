@@ -1,16 +1,16 @@
-const location = document.getElementById("location");
+const x = document.getElementById("location");
 
 function getLocation() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition, showError);
   } else {
-    location.innerHTML = "Geolocation is not supported by this browser.";
+    x.innerHTML = "Geolocation is not supported by this browser.";
   }
 }
 
 function showPosition(position) {
-  location.innerHTML = "Latitude: " + position.coords.latitude +
-    "<br>Longitude: " + position.coords.longitude;
+  x.innerHTML = "Latitude: " + position.coords.latitude +
+    "Longitude: " + position.coords.longitude;
 }
 
 function showError(error) {
@@ -23,9 +23,6 @@ function showError(error) {
       break;
     case error.TIMEOUT:
       x.innerHTML = "The request to get user location timed out."
-      break;
-    case error.UNKNOWN_ERROR:
-      x.innerHTML = "An unknown error occurred."
       break;
   }
 }

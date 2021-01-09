@@ -30,11 +30,18 @@
 </head>
 
 <body>
+<div class="header">
+  <h1>
+    How Far Away
+  </h1>
+  <h2>A location based distance estimation quiz</h2>
+</div>
 <div><button onclick="getLocation()">Try It</button>
-  <button onclick="getRandomCityForQuiz()">Try It</button>
+  <button onclick="init()">Try It</button>
     <h1 id="x"></h1>
   </div>
 
+   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script src="js/vendor/modernizr-3.11.2.min.js"></script>
   <script src="js/plugins.js"></script>
   <script src="js/main.js"></script>

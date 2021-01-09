@@ -6,24 +6,18 @@ let latitude
 let randomLongitude
 let randomLatitude
 //radius in miles
-const searchRadius = 5000
-const minPopulation = 2000000
+const searchRadius = 10000
+const minPopulation = 1000000
+const fetchedCitiesLimit = 1
+var cityObject
 
-
-function getLocation() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(resolvePosition, showPositionError);
-  } else {
-    x.innerHTML = "Geolocation is not supported by this browser.";
-  }
-}
 
 function generateNewLongitudeCoordinate() {
   return getRandomInRange(-180, 180, 4);
 }
 
 function generateNewLatitudeCoordinate() {
-  return getRandomInRange(-90, 90,4)
+  return getRandomInRange(-90, 90, 4)
 }
 
 /**
@@ -34,22 +28,22 @@ function generateNewLatitudeCoordinate() {
  * @return {string}
  */
 function getRandomInRange(from, to, fixed) {
-  const randomNumber =   ((Math.random() * (to - from) + from));
+  const randomNumber = ((Math.random() * (to - from) + from));
   return randomNumber.toFixed(fixed)
 }
 
 function addLeadingZeroesAndSignLongitude(_longitude) {
   //no leading zeroes
   let _longitudeFloat = parseFloat(_longitude)
-  if(Math.abs(_longitudeFloat) >= 100) {
-    if(_longitude.charAt(0).match(/-/)) {
+  if (Math.abs(_longitudeFloat) >= 100) {
+    if (_longitude.charAt(0).match(/-/)) {
       return _longitude
     } else {
       return '+'.concat(_longitude)
     }
     //one leading zero
-  } else if(Math.abs(_longitudeFloat) >= 10) {
-    if(_longitude.charAt(0).match(/-/)) {
+  } else if (Math.abs(_longitudeFloat) >= 10) {
+    if (_longitude.charAt(0).match(/-/)) {
       return '-0' + _longitude.substring(1)
     } else {
       return '+0' + _longitude
@@ -57,30 +51,52 @@ function addLeadingZeroesAndSignLongitude(_longitude) {
   }
   //two leading zeroes
   else {
-    if(_longitude.charAt(0).match(/-/)) {
+    if (_longitude.charAt(0).match(/-/)) {
       return '-00' + _longitude.substring(1)
     } else {
-      return '+00' + _longitude    }
+      return '+00' + _longitude
+    }
   }
 }
 
 function addLeadingZeroesAndSignLatitude(_latitude) {
   let latitudeFloat = parseFloat(_latitude)
-  if(Math.abs(latitudeFloat) >= 10) {
-    if(_latitude.charAt(0).match(/-/)) {
+  if (Math.abs(latitudeFloat) >= 10) {
+    if (_latitude.charAt(0).match(/-/)) {
       return _latitude
-    }
-     else {
-       return '+' + _latitude
+    } else {
+      return '+' + _latitude
     }
   } else {
-    if(_latitude.charAt(0).match(/-/)) {
+    if (_latitude.charAt(0).match(/-/)) {
       return '-0' + _latitude.substring(1)
-    }
-    else {
+    } else {
       return '+0' + _latitude
     }
   }
+}
+
+function init() {
+  navigator.geolocation.getCurrentPosition(res => {
+    longitude = res.coords.longitude
+    latitude = res.coords.latitude
+    getRandomCityForQuiz()
+
+      //success got city and user coordinates
+      .then((res) => {
+       cityObject = res
+        x.innerText = cityObject.city
+      }).catch(err => {
+
+    })
+
+
+    //got no geolocation from user
+  }, reject => {
+
+  })
+
+
 }
 
 
@@ -89,32 +105,31 @@ function addLeadingZeroesAndSignLatitude(_latitude) {
  * @return {Promise<void>}
  */
 function getRandomCityForQuiz() {
-
-  //gen coordinates in ISO-6709
-  randomLongitude = addLeadingZeroesAndSignLongitude(generateNewLongitudeCoordinate())
-  randomLatitude = addLeadingZeroesAndSignLatitude(generateNewLatitudeCoordinate())
-
-  let cityRequest = `https://wft-geo-db.p.rapidapi.com/v1/geo/cities?radius=${searchRadius}&minPopulation=${minPopulation}&location=${encodeURIComponent(randomLatitude)}${encodeURIComponent(randomLongitude)}`
-  console.log(cityRequest)
-
   //fetch city with random coordinates and over 2000000 inhabitants.(lat before long)
-  fetch(cityRequest, {
-    "method": "GET",
-    "headers": {
-      "x-rapidapi-key": "b153197246msh17499e2cfbeafa3p11792cjsn74c890e4d485",
-      "x-rapidapi-host": "wft-geo-db.p.rapidapi.com"
-    }
-  })
-    .then(res => {
-      console.log(res.json())
-    })
-    .catch(err => {
-      console.error(err);
-    });
+  return new Promise((resolve, reject) => {
+    //gen coordinates in ISO-6709
+    randomLongitude = addLeadingZeroesAndSignLongitude(generateNewLongitudeCoordinate())
+    randomLatitude = addLeadingZeroesAndSignLatitude(generateNewLatitudeCoordinate())
+    let cityRequest = `https://wft-geo-db.p.rapidapi.com/v1/geo/cities?radius=${searchRadius}&minPopulation=${minPopulation}
+  &location=${encodeURIComponent(randomLatitude)}${encodeURIComponent(randomLongitude)}&limit=${fetchedCitiesLimit}`
+    console.log(cityRequest)
 
+    axios({
+      method: 'get', url: cityRequest, responseType: 'json', headers: {
+        "x-rapidapi-key": "b153197246msh17499e2cfbeafa3p11792cjsn74c890e4d485",
+        "x-rapidapi-host": "wft-geo-db.p.rapidapi.com"
+      }
+    }).then((res) => {
+      console.log(res)
+      resolve(res.data.data[0])}
+    ).catch(err => {
+      console.log(err)
+      reject(err)
+    })
+  })
 }
 
-function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
+function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
   const R = 6371; // Radius of the earth in km
   const dLat = deg2rad(lat2 - lat1);  // deg2rad below
   const dLon = deg2rad(lon2 - lon1);
@@ -129,7 +144,7 @@ function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
 }
 
 function deg2rad(deg) {
-  return deg * (Math.PI/180)
+  return deg * (Math.PI / 180)
 }
 
 
@@ -142,9 +157,9 @@ function resolvePosition(position) {
 }
 
 function showPositionError(error) {
-  switch(error.code) {
+  switch (error.code) {
     case error.PERMISSION_DENIED:
-      x.innerHtml= "User denied the request for Geolocation."
+      x.innerHtml = "User denied the request for Geolocation."
       break;
     case error.POSITION_UNAVAILABLE:
       x.innerHTML = "Location information is unavailable."

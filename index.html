@@ -41,29 +41,29 @@
 <nav class="navbar navbar-dark bg-dark justify-content-center">
   <a class="navbar-brand" href="#">howfaraway</a>
 </nav>
-<div class="container justify-content-center m-auto">
+<div class="container m-auto">
+
   <div class="header">
     <h1 class="text-center">A location based distance estimation quiz</h1>
   </div>
 
 
+  <div class="container" id="blurFrame">
+    <div class="container" id="mapId"></div>
+  </div>
 
-  <h1 id="x"></h1>
-
-
-  <div class="row justify-content-center" id="questionListId"></div>
-  <button type="button" class="btn btn-dark"onclick="init()">Try It</button>
-  <button type="button" class="btn btn-dark" id="mapButton">testMap</button>
-  <div id="mapId" style='height: 800px; width: 100%;'></div>
+  <div class="flex-column justify-content-center">
+  <h2 id="cityOrInfo" class="text-center">Info how to operate</h2>
+  <button type="button" class="btn btn-dark" onclick="init()">Try It</button>
+  </div>
+  <div class="flex-fill justify-content-center " id="questionListId"></div>
 </div>
 
 
-
-
-<!-- Credit -->
-<div class="copyright">Cities data ©<a href="http://geodb-cities-api.wirefreethought.com/">GeoDB Cities API
-</a></div>
-
+  <!-- Credit -->
+<footer id="footerId" class="modal-footer"><small>Cities data &copy;<a
+  href="http://geodb-cities-api.wirefreethought.com/">GeoDB Cities API
+</a></small></footer>
 
 
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"

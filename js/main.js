@@ -1,6 +1,7 @@
-const x = document.getElementById("x")
+
 const questionList = document.getElementById("questionListId")
-document.getElementById('mapButton').addEventListener("click", generateMap)
+const blurFrame = document.getElementById('blurFrame')
+const cityOrInfo = document.getElementById('cityOrInfo')
 
 
 let longitude
@@ -93,10 +94,12 @@ function init() {
       //success got city and user coordinates
       .then((res) => {
         cityObject = res
-        x.innerText = cityObject.name
+          cityOrInfo.innerText = cityObject.name
+       showMapAndBlurIt()
 
         //generate questions
         generateQuestions(Math.round(getDistanceFromLatLonInKm(cityObject.latitude, cityObject.longitude, latitude, longitude)))
+
         questionList.innerHTML = questions.map((question) => {
           return generateListElementsFromQuestions(question)
         })
@@ -200,24 +203,17 @@ function generateMap() {
     bounds: [
       [-90, -180],
       [90, 180]],
-    minZoom: 3
+    minZoom: 7
   }).addTo(cityMap);
 
+  if (cityMapMarker) {
+    cityMap.removeLayer(cityMapMarker)
+  }
   cityMap.on('drag', function() {
     cityMap.panInsideBounds([
       [-90, -180],
       [90, 180]], { animate: false });
   });
-
-  //add new city marker to map
-  if (cityMapMarker) {
-    cityMap.removeLayer(cityMapMarker)
-  }
-
-  cityMapMarker = new L.marker([latFloat, lonFloat])
-  cityMapMarker.addTo(cityMap);
-  cityMapMarker.bindPopup(cityObject.name).openPopup();
-
 }
 
 /**
@@ -253,6 +249,40 @@ function shuffle(a) {
     a[j] = x;
   }
   return a;
+}
+
+/**
+ * Sets marker on map and unblurs it to show the user the solution
+ */
+function showSolution() {
+  showMarker()
+  setBlurEffectOnMap(false)
+  cityMap.options.minZoom(7)
+}
+
+function showMapAndBlurIt() {
+  setBlurEffectOnMap(true)
+  generateMap()
+}
+
+function showMarker() {
+  //add new city marker to map
+  cityMapMarker = new L.marker([latFloat, lonFloat])
+  cityMapMarker.addTo(cityMap);
+  cityMapMarker.bindPopup(cityObject.name).openPopup();
+}
+
+function setBlurEffectOnMap(isBlured) {
+  if(isBlured) {
+    blurFrame.style.cssText = "-webkit-filter: blur(10px); -moz-filter: blur(10px); -o-filter: blur(10px); -ms-filter: blur(10px); filter: blur(10px);";
+  }
+  else {
+    blurFrame.style.removeProperty('-webkit-filter');
+    blurFrame.style.removeProperty('-moz-filter: blur(12px)');
+    blurFrame.style.removeProperty( '-o-filter');
+    blurFrame.style.removeProperty('-ms-filter');
+    blurFrame.style.removeProperty('filter');
+    }
 }
 
 function generateListElementsFromQuestions(question) {

@@ -6,13 +6,14 @@ let latitude
 let randomLongitude
 let randomLatitude
 //radius in miles
-const searchRadius = 10000
+const searchRadius = 5000
 const minPopulation = 1000000
 const fetchedCitiesLimit = 1
 let cityObject
 const mode = {EASY: 'EASY', HARD: 'HARD'}
 let selectedMode = mode.EASY
 let cityMap =  L.map('mapId')
+let cityMapMarker
 
 
 function generateNewLongitudeCoordinate() {
@@ -88,7 +89,7 @@ function init() {
       //success got city and user coordinates
       .then((res) => {
        cityObject = res
-        x.innerText = cityObject.city
+        x.innerText = cityObject.name
         y.innerText = getDistanceFromLatLonInKm(cityObject.latitude, cityObject.longitude, latitude, longitude)
       }).catch(err => {
 
@@ -176,15 +177,25 @@ function showPositionError(error) {
 }
 
 function generateMap() {
-  let latFloat = parseFloat(randomLatitude)
-  let lonFloat = parseFloat(randomLongitude)
+  let latFloat = parseFloat(cityObject.latitude)
+  let lonFloat = parseFloat(cityObject.longitude)
 
-  cityMap.setView([latFloat, lonFloat], 5);
+  cityMap.setView([latFloat, lonFloat], 7);
   //no tiles
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     'attribution':  'Kartendaten &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> Mitwirkende',
     'useCache': true
   }).addTo(cityMap);
+
+  //add new city marker to map
+
+  if(cityMapMarker) {
+    cityMap.removeLayer(cityMapMarker)
+  }
+
+  cityMapMarker = new L.marker([latFloat,lonFloat])
+  cityMapMarker.addTo(cityMap);
+  cityMapMarker.bindPopup(cityObject.name).openPopup();
 
 
 }

@@ -94,7 +94,6 @@ function init() {
       .then((res) => {
         cityObject = res
         x.innerText = cityObject.name
-        y.innerText = getDistanceFromLatLonInKm(cityObject.latitude, cityObject.longitude, latitude, longitude)
 
         //generate questions
         generateQuestions(Math.round(getDistanceFromLatLonInKm(cityObject.latitude, cityObject.longitude, latitude, longitude)))
@@ -257,7 +256,7 @@ function shuffle(a) {
 }
 
 function generateListElementsFromQuestions(question) {
-  return `<li class="list-group-item">${question.dist} km</li>`
+  return `<button type="button" class="list-group-item list-group-item-action" id="answerListElement">${question.dist} km</button>`
 }
 
 

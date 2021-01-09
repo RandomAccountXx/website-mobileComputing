@@ -11,6 +11,7 @@
    Base styles: opinionated defaults
    ========================================================================== */
 
+
 html {
   color: #222;
   font-size: 1em;
@@ -258,6 +259,15 @@ textarea {
   h2,
   h3 {
     page-break-after: avoid;
+  }
+
+  #answerListElement.hover {
+    color: blue;
+  }
+
+  #questionListId {
+  width: 80%;
+    height: 30%;
   }
 
 }

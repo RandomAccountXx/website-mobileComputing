@@ -9,7 +9,10 @@ let randomLatitude
 const searchRadius = 10000
 const minPopulation = 1000000
 const fetchedCitiesLimit = 1
-var cityObject
+let cityObject
+const mode = {EASY: 'EASY', HARD: 'HARD'}
+let selectedMode = mode.EASY
+let cityMap =  L.map('mapId')
 
 
 function generateNewLongitudeCoordinate() {
@@ -86,6 +89,7 @@ function init() {
       .then((res) => {
        cityObject = res
         x.innerText = cityObject.city
+        y.innerText = getDistanceFromLatLonInKm(cityObject.latitude, cityObject.longitude, latitude, longitude)
       }).catch(err => {
 
     })
@@ -168,5 +172,21 @@ function showPositionError(error) {
       x.innerHTML = "The request to get user location timed out."
       break;
   }
+
 }
 
+function generateMap() {
+  let latFloat = parseFloat(randomLatitude)
+  let lonFloat = parseFloat(randomLongitude)
+
+  cityMap.setView([latFloat, lonFloat], 5);
+  //no tiles
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    'attribution':  'Kartendaten &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> Mitwirkende',
+    'useCache': true
+  }).addTo(cityMap);
+
+
+}
+
+document.getElementById('mapButton').addEventListener("click", generateMap)

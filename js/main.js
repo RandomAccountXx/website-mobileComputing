@@ -1,4 +1,6 @@
 const x = document.getElementById("x")
+const questionList = document.getElementById("questionListId")
+document.getElementById('mapButton').addEventListener("click", generateMap)
 
 
 let longitude
@@ -12,8 +14,10 @@ const fetchedCitiesLimit = 1
 let cityObject
 const mode = {EASY: 'EASY', HARD: 'HARD'}
 let selectedMode = mode.EASY
-let cityMap =  L.map('mapId')
+let cityMap = L.map('mapId')
 let cityMapMarker
+let questions
+const questionNumber = 3
 
 
 function generateNewLongitudeCoordinate() {
@@ -88,9 +92,15 @@ function init() {
 
       //success got city and user coordinates
       .then((res) => {
-       cityObject = res
+        cityObject = res
         x.innerText = cityObject.name
         y.innerText = getDistanceFromLatLonInKm(cityObject.latitude, cityObject.longitude, latitude, longitude)
+
+        //generate questions
+        generateQuestions(Math.round(getDistanceFromLatLonInKm(cityObject.latitude, cityObject.longitude, latitude, longitude)))
+        questionList.innerHTML = questions.map((question) => {
+          return generateListElementsFromQuestions(question)
+        })
       }).catch(err => {
 
     })
@@ -125,8 +135,9 @@ function getRandomCityForQuiz() {
         "x-rapidapi-host": "wft-geo-db.p.rapidapi.com"
       }
     }).then((res) => {
-      console.log(res)
-      resolve(res.data.data[0])}
+        console.log(res)
+        resolve(res.data.data[0])
+      }
     ).catch(err => {
       console.log(err)
       reject(err)
@@ -183,21 +194,70 @@ function generateMap() {
   cityMap.setView([latFloat, lonFloat], 7);
   //no tiles
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    'attribution':  'Kartendaten &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> Mitwirkende',
-    'useCache': true
+    attribution: 'Kartendaten &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> Mitwirkende',
+    useCache: true,
+    continuousWorld: false,
+    noWrap: true,
+    bounds: [
+      [-90, -180],
+      [90, 180]],
+    minZoom: 3
   }).addTo(cityMap);
 
-  //add new city marker to map
+  cityMap.on('drag', function() {
+    cityMap.panInsideBounds([
+      [-90, -180],
+      [90, 180]], { animate: false });
+  });
 
-  if(cityMapMarker) {
+  //add new city marker to map
+  if (cityMapMarker) {
     cityMap.removeLayer(cityMapMarker)
   }
 
-  cityMapMarker = new L.marker([latFloat,lonFloat])
+  cityMapMarker = new L.marker([latFloat, lonFloat])
   cityMapMarker.addTo(cityMap);
   cityMapMarker.bindPopup(cityObject.name).openPopup();
 
-
 }
 
-document.getElementById('mapButton').addEventListener("click", generateMap)
+/**
+ * Takes the dist to the solution city (int format in km) and sets the questions
+ * attribute to different questions (amount specified in questionNumber)
+ */
+function generateQuestions(solution) {
+
+  questions = []
+  questions.push({dist: solution, isSolution: true})
+
+  for(let i = 0; i < questionNumber; i++) {
+    let latForQuestion = generateNewLatitudeCoordinate()
+    let lonForQuestion = generateNewLongitudeCoordinate()
+    let dist = Math.round(getDistanceFromLatLonInKm(latForQuestion, lonForQuestion, latitude, longitude))
+    //dist in km
+    questions.push({dist: dist, isSolution: false})
+  }
+  questions = shuffle(questions)
+  return questions
+}
+
+/**
+ * Shuffles array in place.
+ * @param {Array} a items An array containing the items.
+ */
+function shuffle(a) {
+  let j, x, i;
+  for (i = a.length - 1; i > 0; i--) {
+    j = Math.floor(Math.random() * (i + 1));
+    x = a[i];
+    a[i] = a[j];
+    a[j] = x;
+  }
+  return a;
+}
+
+function generateListElementsFromQuestions(question) {
+  return `<li class="list-group-item">${question.dist} km</li>`
+}
+
+

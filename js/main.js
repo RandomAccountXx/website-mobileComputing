@@ -256,7 +256,7 @@ function shuffle(a) {
 }
 
 function generateListElementsFromQuestions(question) {
-  return `<button type="button" class="list-group-item list-group-item-action" id="answerListElement">${question.dist} km</button>`
+  return `<button type="button" class="btn btn-dark" id="answerListElement">${question.dist} km</button>`
 }
 
 

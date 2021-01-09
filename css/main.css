@@ -260,15 +260,17 @@ textarea {
   h3 {
     page-break-after: avoid;
   }
-
-  #answerListElement.hover {
-    color: blue;
-  }
-
-  #questionListId {
-  width: 80%;
-    height: 30%;
-  }
-
 }
 
+#questionListId {
+;
+}
+
+#questionListId > .btn:hover {
+  color: grey;
+}
+
+#questionListId > .btn {
+  white-space: normal;
+  width: 8rem;
+}

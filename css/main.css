@@ -305,3 +305,12 @@ textarea {
   width: auto;
 }
 
+@media only screen and (hover: none) and (pointer: coarse){
+  /* Regular CSS rules here*/
+  #blurFrame {
+    height: 40vh;
+    width: 80%;
+  }
+
+}
+

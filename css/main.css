@@ -263,9 +263,6 @@ textarea {
   }
 }
 
-#questionListId {
-;
-}
 
 #questionListId > .btn:hover {
   color: grey;
@@ -295,9 +292,16 @@ textarea {
 
 #blurFrame {
   background-color: #ccc;
-  height: 800px;
-  width: 80%;
+  height: 60vh;
+  width: 100%;
   border: 1px solid black;
+}
 
+#answerListElement {
+  margin: 10px;
+}
+
+#initButtonId {
+  width: auto;
 }
 

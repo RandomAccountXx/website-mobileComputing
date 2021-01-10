@@ -319,7 +319,7 @@ function showMarkers() {
 
 function setBlurEffectOnMap(isBlured) {
   if (isBlured) {
-    blurFrame.style.cssText = "-webkit-filter: blur(10px); -moz-filter: blur(10px); -o-filter: blur(10px); -ms-filter: blur(10px); filter: blur(10px);";
+    blurFrame.style.cssText = "-webkit-filter: blur(8px); -moz-filter: blur(8px); -o-filter: blur(8px); -ms-filter: blur(8px); filter: blur(8px);";
   } else {
     blurFrame.style.removeProperty('-webkit-filter');
     blurFrame.style.removeProperty('-moz-filter');
@@ -332,7 +332,7 @@ function setBlurEffectOnMap(isBlured) {
 function generateListElementsFromQuestions(question) {
   //button with unique tag
   let button = document.createElement('button')
-  button.innerHTML = question.dist
+  button.innerHTML = question.dist + " km"
   button.className = "btn btn-dark"
   button.id = "answerListElement"
   button.addEventListener("click", function () {

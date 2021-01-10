@@ -319,7 +319,7 @@ function showMarkers() {
 
 function setBlurEffectOnMap(isBlured) {
   if (isBlured) {
-    blurFrame.style.cssText = "-webkit-filter: blur(8px); -moz-filter: blur(8px); -o-filter: blur(8px); -ms-filter: blur(8px); filter: blur(8px);";
+    blurFrame.style.cssText = "-webkit-filter: blur(6px); -moz-filter: blur(6px); -o-filter: blur(6px); -ms-filter: blur(6px); filter: blur(6px);";
   } else {
     blurFrame.style.removeProperty('-webkit-filter');
     blurFrame.style.removeProperty('-moz-filter');

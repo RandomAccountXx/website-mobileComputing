@@ -280,7 +280,7 @@ textarea {
 }
 
 #footerId {
-  /*position: absolute;*/
+  position: relative;
   bottom: 0;
   left: auto;
   alignment: center;

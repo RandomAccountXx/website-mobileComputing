@@ -293,7 +293,7 @@ function showSolution() {
   cityMap.dragging.enable()
   setBlurEffectOnMap(false)
   cityMap.setView([latFloat, lonFloat], 7);
-  cityMap.options.minZoom = 3
+  cityMap.options.minZoom = 2
 
   initButton.hidden = false
 }

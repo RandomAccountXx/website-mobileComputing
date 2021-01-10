@@ -21,6 +21,17 @@ let cityMapMarkerUserLoacation
 let questions
 const questionNumber = 3
 
+/**
+ * Set drag listener for map just one time; causes error otherwise
+ */
+document.addEventListener("DOMContentLoaded", () => {
+  cityMap.on('drag', function () {
+    cityMap.panInsideBounds([
+      [-90, -180],
+      [90, 180]], {animate: false});
+  });
+})
+
 initButton.addEventListener("click", () => {
   initButton.hidden = true
   init()
@@ -232,14 +243,9 @@ function generateMap() {
   }
 
   if(cityMapMarkerUserLoacation) {
-    cityObject.removeLayer(cityMapMarkerUserLoacation)
-  }
 
-  cityMap.on('drag', function () {
-    cityMap.panInsideBounds([
-      [-90, -180],
-      [90, 180]], {animate: false});
-  });
+    cityMap.removeLayer(cityMapMarkerUserLoacation)
+  }
 }
 
 /**
@@ -302,12 +308,12 @@ function showMarkers() {
   let lonFloat = parseFloat(cityObject.longitude)
   //add new city marker to map
   cityMapMarkerRandomCity = new L.marker([latFloat, lonFloat])
-  cityMapMarkerRandomCity.addTo(cityMap);
   cityMapMarkerRandomCity.bindPopup(cityObject.name).openPopup();
+  cityMap.addLayer(cityMapMarkerRandomCity)
 
   cityMapMarkerUserLoacation = new L.marker([latitudeUser, longitudeUser])
-  cityMapMarkerUserLoacation.addTo(cityMap)
   cityMapMarkerUserLoacation.bindPopup("your current location :)").openPopup()
+  cityMap.addLayer(cityMapMarkerUserLoacation)
 
 }
 

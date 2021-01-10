@@ -4,8 +4,8 @@ const blurFrame = document.getElementById('blurFrame')
 const cityOrInfo = document.getElementById('cityOrInfo')
 
 
-let longitude
-let latitude
+let longitudeUser
+let latitudeUser
 let randomLongitude
 let randomLatitude
 //radius in miles
@@ -16,12 +16,13 @@ let cityObject
 const mode = {EASY: 'EASY', HARD: 'HARD'}
 let selectedMode = mode.EASY
 let cityMap = L.map('mapId')
-let cityMapMarker
+let cityMapMarkerRandomCity
+let cityMapMarkerUserLoacation
 let questions
 const questionNumber = 3
 
 initButton.addEventListener("click", () => {
-  initButton.display = "none"
+  initButton.hidden = true
   init()
 })
 
@@ -101,8 +102,8 @@ function init() {
 
 
   navigator.geolocation.getCurrentPosition(res => {
-    longitude = res.coords.longitude
-    latitude = res.coords.latitude
+    longitudeUser = res.coords.longitude
+    latitudeUser = res.coords.latitude
     getRandomCityForQuiz()
 
       //success got city and user coordinates
@@ -112,7 +113,7 @@ function init() {
         showMapAndBlurIt()
 
         //generate questions
-        generateQuestions(Math.round(getDistanceFromLatLonInKm(cityObject.latitude, cityObject.longitude, latitude, longitude)))
+        generateQuestions(Math.round(getDistanceFromLatLonInKm(cityObject.latitude, cityObject.longitude, latitudeUser, longitudeUser)))
 
         let answerButtons = questions.map((question) => {
           return generateListElementsFromQuestions(question)
@@ -226,9 +227,14 @@ function generateMap() {
   cityMap.dragging.disable()
 
 
-  if (cityMapMarker) {
-    cityMap.removeLayer(cityMapMarker)
+  if (cityMapMarkerRandomCity) {
+    cityMap.removeLayer(cityMapMarkerRandomCity)
   }
+
+  if(cityMapMarkerUserLoacation) {
+    cityObject.removeLayer(cityMapMarkerUserLoacation)
+  }
+
   cityMap.on('drag', function () {
     cityMap.panInsideBounds([
       [-90, -180],
@@ -248,7 +254,7 @@ function generateQuestions(solution) {
   for (let i = 0; i < questionNumber; i++) {
     let latForQuestion = generateNewLatitudeCoordinate()
     let lonForQuestion = generateNewLongitudeCoordinate()
-    let dist = Math.round(getDistanceFromLatLonInKm(latForQuestion, lonForQuestion, latitude, longitude))
+    let dist = Math.round(getDistanceFromLatLonInKm(latForQuestion, lonForQuestion, latitudeUser, longitudeUser))
     //dist in km
     questions.push({dist: dist, isSolution: false})
   }
@@ -277,13 +283,13 @@ function shuffle(a) {
 function showSolution() {
   let latFloat = parseFloat(cityObject.latitude)
   let lonFloat = parseFloat(cityObject.longitude)
-  showMarker()
+  showMarkers()
   cityMap.dragging.enable()
   setBlurEffectOnMap(false)
   cityMap.setView([latFloat, lonFloat], 7);
   cityMap.options.minZoom = 3
 
-  initButton.display = "block"
+  initButton.hidden = false
 }
 
 function showMapAndBlurIt() {
@@ -291,13 +297,18 @@ function showMapAndBlurIt() {
   generateMap()
 }
 
-function showMarker() {
+function showMarkers() {
   let latFloat = parseFloat(cityObject.latitude)
   let lonFloat = parseFloat(cityObject.longitude)
   //add new city marker to map
-  cityMapMarker = new L.marker([latFloat, lonFloat])
-  cityMapMarker.addTo(cityMap);
-  cityMapMarker.bindPopup(cityObject.name).openPopup();
+  cityMapMarkerRandomCity = new L.marker([latFloat, lonFloat])
+  cityMapMarkerRandomCity.addTo(cityMap);
+  cityMapMarkerRandomCity.bindPopup(cityObject.name).openPopup();
+
+  cityMapMarkerUserLoacation = new L.marker([latitudeUser, longitudeUser])
+  cityMapMarkerUserLoacation.addTo(cityMap)
+  cityMapMarkerUserLoacation.bindPopup("your current location :)").openPopup()
+
 }
 
 function setBlurEffectOnMap(isBlured) {

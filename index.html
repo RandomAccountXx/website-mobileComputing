@@ -45,7 +45,7 @@
 <div class="container m-auto">
 
   <div class="header">
-    <h1 class="text-center mb-lg-3">A location based distance estimation quiz</h1>
+    <h1 id="explanationTitle" class="text-center mb-lg-3">A location based distance estimation quiz</h1>
   </div>
 
 
@@ -55,20 +55,19 @@
 
   <h2 id="cityOrInfo" class="text-center">Info how to operate</h2>
 
-  <div class="d-flex justify-content-center">
+  <div class="d-flex justify-content-center" id="getCityButtonContainerId">
     <button type="button" class="btn btn-dark mb-3" id="initButtonId">Get new City</button>
   </div>
 
 
-  <div class="container w-100">
-    <div class="row justify-content-center ">
-
-      <div class="col-3" id="questionListId"></div>
+  <div class="container w-100 text-center" id="questionListId">
+    <div class="row justify-content-center">
+      <div class="col justify-content-evenly"></div>
     </div>
   </div>
 </div>
 
-<footer class="footer text-end">
+<footer class="footer align-self-end">
   <div class="navbar fixed-bottom text-end">
     <div class="container text-end">
       <div class="row justify-content-end text-end"><small>Cities data &copy;<a
@@ -77,6 +76,7 @@
     </div>
   </div>
 </footer>
+
 
 
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"

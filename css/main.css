@@ -263,7 +263,6 @@ textarea {
   }
 }
 
-
 #questionListId > .btn:hover {
   color: grey;
 }
@@ -305,12 +304,34 @@ textarea {
   width: auto;
 }
 
-@media only screen and (hover: none) and (pointer: coarse){
+@media only screen and (max-width: 600px) {
   /* Regular CSS rules here*/
   #blurFrame {
-    height: 40vh;
-    width: 80%;
+    height: 50vh;
+    width: 100%;
   }
+
+  #explanationTitle {
+    font-size: 1rem;
+    margin: 1rem;
+  }
+
+  #cityOrInfo {
+    font-size: 1rem;
+  }
+
+  #questionListId {
+    position: relative;
+    align-self: end;
+  }
+  #initButtonId {
+    margin-bottom: 0.5rem;
+  }
+
+  #answerListElement {
+    margin: 0.2rem;
+  }
+
 
 }
 

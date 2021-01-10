@@ -2,7 +2,7 @@ const initButton = document.getElementById("initButtonId")
 const questionList = document.getElementById("questionListId")
 const blurFrame = document.getElementById('blurFrame')
 const cityOrInfo = document.getElementById('cityOrInfo')
-
+const getCityButtonContainer = document.getElementById('getCityButtonContainerId')
 
 let longitudeUser
 let latitudeUser
@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
 })
 
 initButton.addEventListener("click", () => {
-  initButton.hidden = true
+  getCityButtonContainer.style.cssText = "visibility: hidden"
   init()
 })
 
@@ -295,7 +295,7 @@ function showSolution() {
   cityMap.setView([latFloat, lonFloat], 7);
   cityMap.options.minZoom = 2
 
-  initButton.hidden = false
+  getCityButtonContainer.style.cssText = "visibility: visible"
 }
 
 function showMapAndBlurIt() {

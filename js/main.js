@@ -1,4 +1,4 @@
-
+const initButton = document.getElementById("initButtonId")
 const questionList = document.getElementById("questionListId")
 const blurFrame = document.getElementById('blurFrame')
 const cityOrInfo = document.getElementById('cityOrInfo')
@@ -20,6 +20,10 @@ let cityMapMarker
 let questions
 const questionNumber = 3
 
+initButton.addEventListener("click", () => {
+  initButton.display = "none"
+  init()
+})
 
 function generateNewLongitudeCoordinate() {
   return getRandomInRange(-180, 180, 4);
@@ -85,7 +89,17 @@ function addLeadingZeroesAndSignLatitude(_latitude) {
   }
 }
 
+function cleanLastRun() {
+  //remove buttons
+  questionList.innerHTML = ''
+}
+
 function init() {
+
+  //prepare for new game
+  cleanLastRun()
+
+
   navigator.geolocation.getCurrentPosition(res => {
     longitude = res.coords.longitude
     latitude = res.coords.latitude
@@ -94,14 +108,17 @@ function init() {
       //success got city and user coordinates
       .then((res) => {
         cityObject = res
-          cityOrInfo.innerText = cityObject.name
-       showMapAndBlurIt()
+        cityOrInfo.innerText = cityObject.name
+        showMapAndBlurIt()
 
         //generate questions
         generateQuestions(Math.round(getDistanceFromLatLonInKm(cityObject.latitude, cityObject.longitude, latitude, longitude)))
 
-        questionList.innerHTML = questions.map((question) => {
+        let answerButtons = questions.map((question) => {
           return generateListElementsFromQuestions(question)
+        })
+        answerButtons.forEach((answerButton) => {
+          questionList.appendChild(answerButton)
         })
       }).catch(err => {
 
@@ -166,24 +183,24 @@ function deg2rad(deg) {
 }
 
 
-function resolvePosition(position) {
+/** function resolvePosition(position) {
   x.innerHTML = "Latitude: " + position.coords.latitude +
     " Longitude: " + position.coords.longitude;
 
   latitude = position.coords.latitude
   longitude = position.coords.longitude
-}
+} */
 
 function showPositionError(error) {
   switch (error.code) {
     case error.PERMISSION_DENIED:
-      x.innerHtml = "User denied the request for Geolocation."
+      //x.innerHtml = "User denied the request for Geolocation."
       break;
     case error.POSITION_UNAVAILABLE:
-      x.innerHTML = "Location information is unavailable."
+      //x.innerHTML = "Location information is unavailable."
       break;
     case error.TIMEOUT:
-      x.innerHTML = "The request to get user location timed out."
+      //x.innerHTML = "The request to get user location timed out."
       break;
   }
 
@@ -203,16 +220,19 @@ function generateMap() {
     bounds: [
       [-90, -180],
       [90, 180]],
-    minZoom: 7
   }).addTo(cityMap);
+
+  cityMap.options.minZoom = 7
+  cityMap.dragging.disable()
+
 
   if (cityMapMarker) {
     cityMap.removeLayer(cityMapMarker)
   }
-  cityMap.on('drag', function() {
+  cityMap.on('drag', function () {
     cityMap.panInsideBounds([
       [-90, -180],
-      [90, 180]], { animate: false });
+      [90, 180]], {animate: false});
   });
 }
 
@@ -225,7 +245,7 @@ function generateQuestions(solution) {
   questions = []
   questions.push({dist: solution, isSolution: true})
 
-  for(let i = 0; i < questionNumber; i++) {
+  for (let i = 0; i < questionNumber; i++) {
     let latForQuestion = generateNewLatitudeCoordinate()
     let lonForQuestion = generateNewLongitudeCoordinate()
     let dist = Math.round(getDistanceFromLatLonInKm(latForQuestion, lonForQuestion, latitude, longitude))
@@ -252,12 +272,18 @@ function shuffle(a) {
 }
 
 /**
- * Sets marker on map and unblurs it to show the user the solution
+ * Sets marker on map and unblurs it to show the user the solution and enables user to start next run
  */
 function showSolution() {
+  let latFloat = parseFloat(cityObject.latitude)
+  let lonFloat = parseFloat(cityObject.longitude)
   showMarker()
+  cityMap.dragging.enable()
   setBlurEffectOnMap(false)
-  cityMap.options.minZoom(7)
+  cityMap.setView([latFloat, lonFloat], 7);
+  cityMap.options.minZoom = 3
+
+  initButton.display = "block"
 }
 
 function showMapAndBlurIt() {
@@ -266,6 +292,8 @@ function showMapAndBlurIt() {
 }
 
 function showMarker() {
+  let latFloat = parseFloat(cityObject.latitude)
+  let lonFloat = parseFloat(cityObject.longitude)
   //add new city marker to map
   cityMapMarker = new L.marker([latFloat, lonFloat])
   cityMapMarker.addTo(cityMap);
@@ -273,20 +301,36 @@ function showMarker() {
 }
 
 function setBlurEffectOnMap(isBlured) {
-  if(isBlured) {
+  if (isBlured) {
     blurFrame.style.cssText = "-webkit-filter: blur(10px); -moz-filter: blur(10px); -o-filter: blur(10px); -ms-filter: blur(10px); filter: blur(10px);";
-  }
-  else {
+  } else {
     blurFrame.style.removeProperty('-webkit-filter');
-    blurFrame.style.removeProperty('-moz-filter: blur(12px)');
-    blurFrame.style.removeProperty( '-o-filter');
+    blurFrame.style.removeProperty('-moz-filter');
+    blurFrame.style.removeProperty('-o-filter');
     blurFrame.style.removeProperty('-ms-filter');
     blurFrame.style.removeProperty('filter');
-    }
+  }
 }
 
 function generateListElementsFromQuestions(question) {
-  return `<button type="button" class="btn btn-dark" id="answerListElement">${question.dist} km</button>`
+  //button with unique tag
+  let button = document.createElement('button')
+  button.innerHTML = question.dist
+  button.className = "btn btn-dark"
+  button.id = "answerListElement"
+  button.addEventListener("click", function () {
+    //correct solution
+    if (question.isSolution) {
+      button.style.color = 'green'
+      //handle wrong answer
+    } else {
+      button.style.color = 'red'
+    }
+
+    showSolution()
+    document.querySelectorAll('#answerListElement').forEach((button) => {
+      button.disabled = true
+    })
+  })
+  return button;
 }
-
-

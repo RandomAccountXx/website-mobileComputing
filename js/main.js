@@ -20,6 +20,8 @@ let cityMapMarkerRandomCity
 let cityMapMarkerUserLoacation
 let questions
 const questionNumber = 3
+//the current solution in km
+let currentSolutionInKm
 
 /**
  * Set drag listener for map just one time; causes error otherwise
@@ -254,6 +256,7 @@ function generateMap() {
  */
 function generateQuestions(solution) {
 
+  currentSolutionInKm = solution
   questions = []
   questions.push({dist: solution, isSolution: true})
 
@@ -294,7 +297,7 @@ function showSolution() {
   setBlurEffectOnMap(false)
   cityMap.setView([latFloat, lonFloat], 7);
   cityMap.options.minZoom = 1
-
+  cityOrInfo.innerText = `The distance to ${cityObject.name} from your position is ${currentSolutionInKm}km`
   getCityButtonContainer.style.cssText = "visibility: visible"
 }
 

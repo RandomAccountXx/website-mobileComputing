@@ -1,8 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="be5c5dbb-b13c-42cc-8ec7-3fd75f7cc419" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/img/howfarawayLogo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/img/howfarawayLogo2.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/main.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -22,9 +43,18 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/img" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\maxke\Desktop\prog\website mobile computing\img" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\maxke\Desktop\prog\website mobile computing\img" />
+      <recent name="C:\Users\maxke\Desktop\prog\website mobile computing\res\img" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration default="true" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" environment="&lt;No Environment&gt;" path="">
@@ -45,21 +75,39 @@
       <workItem from="1610146295438" duration="33883000" />
       <workItem from="1610229581648" duration="17826000" />
       <workItem from="1610307721421" duration="1836000" />
-      <workItem from="1610313479231" duration="5438000" />
+      <workItem from="1610313479231" duration="6034000" />
+      <workItem from="1610405554302" duration="663000" />
+      <workItem from="1610816341927" duration="2043000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="WindowStateProjectService">
     <state x="2656" y="356" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1610071591594">
       <screen x="1920" y="0" width="2560" height="1400" />
     </state>
     <state x="2656" y="356" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040/1920.0.2560.1400@1920.0.2560.1400" timestamp="1610071591594" />
-    <state x="2981" y="456" key="FileChooserDialogImpl" timestamp="1610069763063">
+    <state x="2931" y="448" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1610819585552">
       <screen x="1920" y="0" width="2560" height="1400" />
     </state>
+    <state x="2931" y="448" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040/1920.0.2560.1400@1920.0.2560.1400" timestamp="1610819585552" />
+    <state x="796" y="339" key="FileChooserDialogImpl" timestamp="1610405618752">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="796" y="339" key="FileChooserDialogImpl/0.0.1920.1040/1920.0.2560.1400@0.0.1920.1040" timestamp="1610405618752" />
     <state x="2981" y="456" key="FileChooserDialogImpl/0.0.1920.1040/1920.0.2560.1400@1920.0.2560.1400" timestamp="1610069763063" />
     <state width="2517" height="352" key="GridCell.Tab.0.bottom" timestamp="1610044595343">
       <screen x="1920" y="0" width="2560" height="1400" />
@@ -114,32 +162,32 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/js/main.js</url>
-          <line>117</line>
+          <line>119</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/js/main.js</url>
-          <line>116</line>
+          <line>118</line>
           <option name="timeStamp" value="7" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/js/main.js</url>
-          <line>114</line>
+          <line>116</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/js/main.js</url>
-          <line>120</line>
+          <line>122</line>
           <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/js/main.js</url>
-          <line>224</line>
+          <line>226</line>
           <option name="timeStamp" value="17" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/js/main.js</url>
-          <line>115</line>
+          <line>117</line>
           <option name="timeStamp" value="19" />
         </line-breakpoint>
       </breakpoints>

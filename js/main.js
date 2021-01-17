@@ -135,16 +135,29 @@ function init() {
           questionList.appendChild(answerButton)
         })
       }).catch(err => {
-
+        alert("Could not fetch city object from the server: " + err.message)
     })
 
-
     //got no geolocation from user
-  }, reject => {
+  }, showError
+  )
+}
 
-  })
-
-
+function showError(error) {
+  switch(error.code) {
+    case error.PERMISSION_DENIED:
+      alert("User denied the request for Geolocation.")
+      break;
+    case error.POSITION_UNAVAILABLE:
+      alert("Location information is unavailable.")
+      break;
+    case error.TIMEOUT:
+     alert("The request to get user location timed out.")
+      break;
+    case error.UNKNOWN_ERROR:
+      alert("An unknown error occurred.")
+      break;
+  }
 }
 
 

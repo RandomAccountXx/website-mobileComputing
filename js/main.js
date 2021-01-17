@@ -17,7 +17,7 @@ const mode = {EASY: 'EASY', HARD: 'HARD'}
 let selectedMode = mode.EASY
 let cityMap = L.map('mapId')
 let cityMapMarkerRandomCity
-let cityMapMarkerUserLoacation
+let cityMapMarkerUserLocation
 let questions
 const questionNumber = 3
 //the current solution in km
@@ -257,9 +257,9 @@ function generateMap() {
     cityMap.removeLayer(cityMapMarkerRandomCity)
   }
 
-  if(cityMapMarkerUserLoacation) {
+  if(cityMapMarkerUserLocation) {
 
-    cityMap.removeLayer(cityMapMarkerUserLoacation)
+    cityMap.removeLayer(cityMapMarkerUserLocation)
   }
 }
 
@@ -327,9 +327,9 @@ function showMarkers() {
   cityMapMarkerRandomCity.bindPopup(cityObject.name).openPopup();
   cityMap.addLayer(cityMapMarkerRandomCity)
 
-  cityMapMarkerUserLoacation = new L.marker([latitudeUser, longitudeUser])
-  cityMapMarkerUserLoacation.bindPopup("your current location :)").openPopup()
-  cityMap.addLayer(cityMapMarkerUserLoacation)
+  cityMapMarkerUserLocation = new L.marker([latitudeUser, longitudeUser])
+  cityMapMarkerUserLocation.bindPopup("your current location :)").openPopup()
+  cityMap.addLayer(cityMapMarkerUserLocation)
 
 }
 
